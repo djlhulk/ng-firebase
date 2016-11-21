@@ -4,6 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { AngularFireModule } from 'angularfire2';
+
+// Initialize Firebase
+  export const firebaseConfig  = {
+    apiKey: "AIzaSyBGzKICh35a2MrV66iVxVVrAf-Fv1xU7hk",
+    authDomain: "activity-ng.firebaseapp.com",
+    databaseURL: "https://activity-ng.firebaseio.com",
+    storageBucket: ""
+  };
 
 @NgModule({
   declarations: [
@@ -12,7 +21,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]
