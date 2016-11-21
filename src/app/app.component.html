@@ -1,8 +1,14 @@
 <h1>
- {{ (item | async)?.name }}
+ {{ (title | async)?.name }}
 </h1>
+
 <ul>
-  <li class="text" *ngFor="let item of items | async">
-    {{item.$key}} : {{item.$value}}
+  <li class="text" *ngFor="let sport of sports | async">
+   <input type="text" #updatetext [value]="sport.text" />
+   <button (click)="updateSport(sport.$key, updatetext.value)">Update</button>
+   <button (click)="deleteSport(sport.$key)">Delete</button>
   </li>
 </ul>
+<input type="text" #newitem />
+<button (click)="addSport(newitem.value)">Add Sport</button>
+<button (click)="deleteSports()">Delete Sports</button>

@@ -8,12 +8,32 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  items: FirebaseListObservable<any[]>;
-  item: FirebaseObjectObservable<any>;
+  title: FirebaseObjectObservable<any>;
+  sports: FirebaseListObservable<any[]>;
+  
 
   constructor(af: AngularFire){
-	this.items = af.database.list('items');
-	this.item = af.database.object('/item');
+    this.title = af.database.object('/item');
+	  this.sports = af.database.list('/items', {
+      query: {
+        limitToFirst: 5,
+        orderByKey: true
+      }
+    });
   }
-  
+
+  addSport(newItem: string){
+      this.sports.push({text:newItem});
+  }
+
+  updateSport(key: string, newText: string) {
+    this.sports.update(key, { text: newText });
+  }
+
+  deleteSport(key: string) {    
+    this.sports.remove(key); 
+  }
+  deleteSports() {
+    this.sports.remove();
+  }
 }
