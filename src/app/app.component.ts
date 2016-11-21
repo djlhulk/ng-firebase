@@ -8,7 +8,6 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
   items: FirebaseListObservable<any[]>;
   item: FirebaseObjectObservable<any>;
 

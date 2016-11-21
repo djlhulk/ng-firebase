@@ -1,7 +1,6 @@
 <h1>
-  {{title}}
+ {{ (item | async)?.name }}
 </h1>
-<h2>{{ (item | async)?.name }}</h2>
 <ul>
   <li class="text" *ngFor="let item of items | async">
     {{item.$key}} : {{item.$value}}
