@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { Subject } from 'rxjs/Subject';
 
 
 @Component({
@@ -10,20 +11,21 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 export class AppComponent {
   title: FirebaseObjectObservable<any>;
   sports: FirebaseListObservable<any[]>;
+  categorySubject: Subject<any>;
   
-
   constructor(af: AngularFire){
+    this.categorySubject = new Subject();
     this.title = af.database.object('/item');
 	  this.sports = af.database.list('/items', {
       query: {
-        limitToFirst: 5,
-        orderByKey: true
+        orderByChild: 'category',
+        equalTo: this.categorySubject
       }
     });
   }
 
-  addSport(newItem: string){
-      this.sports.push({text:newItem});
+  addSport(newItem: string, newCategory: string){
+      this.sports.push({text:newItem, category: newCategory });
   }
 
   updateSport(key: string, newText: string) {
@@ -33,7 +35,13 @@ export class AppComponent {
   deleteSport(key: string) {    
     this.sports.remove(key); 
   }
+
   deleteSports() {
     this.sports.remove();
   }
+  
+  filter(category: string) {
+    this.categorySubject.next(category); 
+  }
+
 }

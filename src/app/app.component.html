@@ -9,6 +9,20 @@
    <button (click)="deleteSport(sport.$key)">Delete</button>
   </li>
 </ul>
-<input type="text" #newitem />
-<button (click)="addSport(newitem.value)">Add Sport</button>
+<input type="text" placeholder="sport" #newitem />
+<input type="text" placeholder="category" #newcategory />
+<button (click)="addSport(newitem.value, newcategory.value)">Add Sport</button>
 <button (click)="deleteSports()">Delete Sports</button>
+
+<h2>Query with observable values</h2>
+
+<ul>
+  <li class="text" *ngFor="let sport of sports | async">
+  	 {{ sport.text }}
+ </li>
+</ul>
+<div>
+    <h4>Filter by category</h4>
+    <button (click)="filter('motor')">Motor</button>
+    <button (click)="filter('gym')">Gym</button>
+  </div>
