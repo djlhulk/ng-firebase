@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable , AuthProviders, AuthMethods } from 'angularfire2';
 import { Subject } from 'rxjs/Subject';
 
 
@@ -8,20 +8,19 @@ import { Subject } from 'rxjs/Subject';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title: FirebaseObjectObservable<any>;
   sports: FirebaseListObservable<any[]>;
   categorySubject: Subject<any>;
   
-  constructor(af: AngularFire){
+  constructor(public af: AngularFire){
     this.categorySubject = new Subject();
     this.title = af.database.object('/item');
-	  this.sports = af.database.list('/items', {
-      query: {
-        orderByChild: 'category',
-        equalTo: this.categorySubject
-      }
-    });
+	  this.sports = af.database.list('/items');
+
+    // Auth firebase
+    this.af.auth.subscribe(auth => console.log('auth ' + auth));
   }
 
   addSport(newItem: string, newCategory: string){
@@ -43,5 +42,16 @@ export class AppComponent {
   filter(category: string) {
     this.categorySubject.next(category); 
   }
+
+  login() {
+    this.af.auth.login();
+  }
+
+  logout() {
+     this.af.auth.logout();
+  }
+
+
+  
 
 }

@@ -2,6 +2,10 @@
  {{ (title | async)?.name }}
 </h1>
 
+<div> {{ (af.auth | async)?.uid }} </div>
+  <button (click)="login()">Login</button>
+  <button (click)="logout()">Logout</button>
+
 <ul>
   <li class="text" *ngFor="let sport of sports | async">
    <input type="text" #updatetext [value]="sport.text" />
@@ -14,15 +18,5 @@
 <button (click)="addSport(newitem.value, newcategory.value)">Add Sport</button>
 <button (click)="deleteSports()">Delete Sports</button>
 
-<h2>Query with observable values</h2>
 
-<ul>
-  <li class="text" *ngFor="let sport of sports | async">
-  	 {{ sport.text }}
- </li>
-</ul>
-<div>
-    <h4>Filter by category</h4>
-    <button (click)="filter('motor')">Motor</button>
-    <button (click)="filter('gym')">Gym</button>
-  </div>
+
